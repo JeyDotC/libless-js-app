@@ -15,7 +15,7 @@ const newFolderNameFormat = /New Folder( [0-9]+)*/;
 export function FileListNewFolder(newFolderButton) {
 
   const [getEntriesInCurrentPath] = entriesInCurrentPath;
-  const [getCUrrentPath, setCurrentPath, onCurrentPathChanged] = currentPath;
+  const [getCurrentPath, setCurrentPath, onCurrentPathChanged] = currentPath;
   const [getFolderToEdit, setFolderToEdit] = stateUnit('');
   const [, setEditingEntry] = editingEntry;
 
@@ -26,7 +26,7 @@ export function FileListNewFolder(newFolderButton) {
       return;
     }
     setFolderToEdit(undefined);
-    setEditingEntry({})
+    setEditingEntry({ name: folderToEdit, type: FileType.Directory })
   }
   onCurrentPathChanged(handlePathChanged, { priority: 'low' });
 
@@ -52,10 +52,10 @@ export function FileListNewFolder(newFolderButton) {
 
     const newFolderName = `New Folder${newFolderSuffix}`;
 
-    await create({ path: getCUrrentPath(), type: FileType.Directory, name: newFolderName });
+    await create({ path: getCurrentPath(), type: FileType.Directory, name: newFolderName });
 
     setFolderToEdit(newFolderName);
-    setCurrentPath(getCUrrentPath());
+    setCurrentPath(getCurrentPath());
   }
   newFolderButton.addEventListener('click', handleCreateNewFolder);
 }

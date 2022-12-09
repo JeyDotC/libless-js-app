@@ -1,6 +1,8 @@
 import { attach } from "../../../lib/controller.js";
 import { i, td, tr } from "../../../lib/dom.js";
+import { FileEntryActions } from "../FileEntryActions.js";
 import { FileNameEditor } from "../FileNameEditor.js";
+import { FileEntryActionsView } from "./FileEntryActionsView.js";
 
 export function FileEntryTableRowView({ type, name, extension, }) {
   return tr({ className: 'cursor-pointer' })(
@@ -8,5 +10,8 @@ export function FileEntryTableRowView({ type, name, extension, }) {
       i({ className: `fa ${type === 0 ? 'fa-folder' : 'fa-file' }`})()
     ),
     attach(FileNameEditor, td({ className: 'file-system-entry-name' })(), { name, extension }),
+    td({ className: 'text-end' })(
+      attach(FileEntryActions, FileEntryActionsView(), { name, extension })
+    )
   );
 }

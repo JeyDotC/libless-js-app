@@ -24,7 +24,8 @@ export function FileListEntries(view) {
     try {
       const files = await list({ path });
       setFiles(files);
-    } catch {
+    } catch (e) {
+      console.log(e);
       setCurrentPath(oldPath);
     }
   }

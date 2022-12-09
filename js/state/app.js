@@ -20,7 +20,7 @@ const currentView = stateUnit('table', {
 });
 
 /**
- * @type {FileSystemEntryInfo|undefined}
+ * @type {FileSystemEntryInfo}
  */
 const editingEntryDefault = undefined;
 

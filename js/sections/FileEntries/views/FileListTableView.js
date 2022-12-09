@@ -10,7 +10,8 @@ export function FileListTableView({ files }) {
     thead()(
       tr()(
         td()(),
-        th()('Name')
+        th()('Name'),
+        td()()
       )
     ),
     tbody({ id: 'file-system-list' })(

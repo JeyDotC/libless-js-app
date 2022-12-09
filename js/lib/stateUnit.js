@@ -22,14 +22,14 @@ export function localStorageScope(localStorageKey) {
  * @param {{ causesNavigation: boolean }} [options={ causesNavigation: false }] 
  */
 export function searchParamsScope(key, { causesNavigation } = { causesNavigation: false }) {
-  return ([ , setValue, onValue]) => {
+  return ([getValue, setValue, onValue]) => {
     const currentUri = new URL(location);
     const storedValue = currentUri.searchParams.get(key);
 
     if (storedValue !== null) {
       setValue(storedValue);
     } else {
-      currentUri.searchParams.set(key, storedValue);
+      currentUri.searchParams.set(key, getValue());
       if (causesNavigation) {
         location.href = currentUri.toString();
       } else {
