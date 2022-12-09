@@ -11,7 +11,7 @@ export function FileEntryTableRowView({ type, name, extension, }) {
     ),
     attach(FileNameEditor, td({ className: 'file-system-entry-name' })(), { name, extension }),
     td({ className: 'text-end' })(
-      attach(FileEntryActions, FileEntryActionsView(), { name, extension })
+      attach(FileEntryActions, FileEntryActionsView(), { type, name, extension })
     )
   );
 }

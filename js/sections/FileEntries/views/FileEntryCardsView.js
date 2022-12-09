@@ -21,7 +21,7 @@ export function FileEntryCardsView({ type, name, extension, }) {
         attach(
           FileNameEditor,
           div({ className: 'file-system-entry-name card-body' })(),
-          { name, extension }
+          { type, name, extension }
         ),
       )
     )

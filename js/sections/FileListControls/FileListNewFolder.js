@@ -1,5 +1,4 @@
 import { create, FileType } from "../../api/fileSystem.js";
-import { stateUnit } from "../../lib/stateUnit.js";
 import { currentPath, editingEntry, entriesInCurrentPath } from "../../state/app.js";
 
 /**
@@ -15,20 +14,8 @@ const newFolderNameFormat = /New Folder( [0-9]+)*/;
 export function FileListNewFolder(newFolderButton) {
 
   const [getEntriesInCurrentPath] = entriesInCurrentPath;
-  const [getCurrentPath, setCurrentPath, onCurrentPathChanged] = currentPath;
-  const [getFolderToEdit, setFolderToEdit] = stateUnit('');
+  const [getCurrentPath, setCurrentPath] = currentPath;
   const [, setEditingEntry] = editingEntry;
-
-  // Add State Unit Listeners.
-  const handlePathChanged = () => {
-    const folderToEdit = getFolderToEdit();
-    if(!folderToEdit) {
-      return;
-    }
-    setFolderToEdit(undefined);
-    setEditingEntry({ name: folderToEdit, type: FileType.Directory })
-  }
-  onCurrentPathChanged(handlePathChanged, { priority: 'low' });
 
   // Add DOM Event Listeners.
   const handleCreateNewFolder = async () => {
@@ -54,7 +41,7 @@ export function FileListNewFolder(newFolderButton) {
 
     await create({ path: getCurrentPath(), type: FileType.Directory, name: newFolderName });
 
-    setFolderToEdit(newFolderName);
+    setEditingEntry({ name: newFolderName, type: FileType.Directory })
     setCurrentPath(getCurrentPath());
   }
   newFolderButton.addEventListener('click', handleCreateNewFolder);

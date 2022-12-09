@@ -4,7 +4,7 @@
  */
 const AttrHandlers = {
   className: (element, key, value) => element.className = value,
-  dataset: (element, key, value) => element.dataset = value,
+  dataset: (element, key, value) => Object.entries(value || {}).forEach(([dataKey, dataValue]) => element.dataset[dataKey] = dataValue),
 };
 /**
  * @type {AttrHandler}
