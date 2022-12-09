@@ -37,6 +37,8 @@ export function searchParamsScope(key, { causesNavigation } = { causesNavigation
       }
     }
 
+    window.addEventListener('popstate', () => setValue(new URL(location).searchParams.get(key) || '/'))
+
     onValue(
       newValue => {
         const uri = new URL(location);
