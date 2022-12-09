@@ -1,10 +1,10 @@
-import { localStorageScope, stateUnit } from "../lib/stateUnit.js";
+import { localStorageScope, searchParamsScope, stateUnit } from "../lib/stateUnit.js";
 /**
  * @typedef {import("../api/fileSystem.js").FileSystemEntryInfo} FileSystemEntryInfo
  */
 
 const currentPath = stateUnit('/', {
-  scope: localStorageScope("currentPath"),
+  scope: searchParamsScope("currentPath"),
   allowRefresh: true
 });
 

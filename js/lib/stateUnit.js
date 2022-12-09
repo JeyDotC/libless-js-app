@@ -1,9 +1,9 @@
 export function localStorageScope(localStorageKey) {
   return ([getValue, setValue, onValue]) => {
-    
+
     const storedValue = localStorage.getItem(localStorageKey);
 
-    if(storedValue !== null){
+    if (storedValue !== null) {
       const retrievedValue = JSON.parse(storedValue);
       setValue(retrievedValue);
     } else {
@@ -15,6 +15,41 @@ export function localStorageScope(localStorageKey) {
       { priority: 'low' }
     );
   };
+}
+
+/**
+ * @param {string} key
+ * @param {{ causesNavigation: boolean }} [options={ causesNavigation: false }] 
+ */
+export function searchParamsScope(key, { causesNavigation } = { causesNavigation: false }) {
+  return ([ , setValue, onValue]) => {
+    const currentUri = new URL(location);
+    const storedValue = currentUri.searchParams.get(key);
+
+    if (storedValue !== null) {
+      setValue(storedValue);
+    } else {
+      currentUri.searchParams.set(key, storedValue);
+      if (causesNavigation) {
+        location.href = currentUri.toString();
+      } else {
+        history.pushState('', '', currentUri);
+      }
+    }
+
+    onValue(
+      newValue => {
+        const uri = new URL(location);
+        uri.searchParams.set(key, newValue);
+        if (causesNavigation) {
+          location.href = uri.toString();
+        } else {
+          history.pushState('', '', uri);
+        }
+      },
+      { priority: 'low' }
+    );
+  }
 }
 
 /**
@@ -44,7 +79,7 @@ export function localStorageScope(localStorageKey) {
 export function stateUnit(initialValue, { scope, allowRefresh = false } = {}) {
   let value = initialValue;
 
-  const valueChangedHandlers = { 
+  const valueChangedHandlers = {
     high: [],
     medium: [],
     low: [],
@@ -53,7 +88,7 @@ export function stateUnit(initialValue, { scope, allowRefresh = false } = {}) {
   const getValue = () => value;
 
   const setValue = (newValue) => {
-    if(!allowRefresh && value === newValue){
+    if (!allowRefresh && value === newValue) {
       return;
     }
     const oldValue = value;
@@ -71,7 +106,7 @@ export function stateUnit(initialValue, { scope, allowRefresh = false } = {}) {
      * @type {Function[]|undefined}
      */
     const handlers = valueChangedHandlers[p];
-    if(handlers === undefined){
+    if (handlers === undefined) {
       return;
     }
 
@@ -86,7 +121,7 @@ export function stateUnit(initialValue, { scope, allowRefresh = false } = {}) {
     valueChangedHandlers,
   ];
 
-  if(scope !== undefined) {
+  if (scope !== undefined) {
     scope(unit);
   }
 
