@@ -1,4 +1,6 @@
 import { div, i } from "../../../lib/dom.js";
+import { FileNameEditor } from "../FileNameEditor.js";
+import { attach } from '../../../lib/controller.js';
 
 export function FileEntryCardsView({ type, name, extension, }) {
   return (
@@ -7,7 +9,11 @@ export function FileEntryCardsView({ type, name, extension, }) {
         div({ className: 'file-system-entry-icon card-header' })(
           i({ className: `fa ${type === 0 ? 'fa-folder' : 'fa-file'} fa-2xl` })()
         ),
-        div({ className: 'file-system-entry-name card-body' })(`${name}${extension || ''}`),
+        attach(
+          FileNameEditor, 
+          div({ className: 'file-system-entry-name card-body' })(),
+          { name, extension }
+        ),
       )
     )
   );

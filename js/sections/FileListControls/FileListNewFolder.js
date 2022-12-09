@@ -25,10 +25,10 @@ export function FileListNewFolder(newFolderButton) {
     if(!folderToEdit) {
       return;
     }
-    setEditingEntry()
     setFolderToEdit(undefined);
+    setEditingEntry({})
   }
-  onCurrentPathChanged(handlePathChanged);
+  onCurrentPathChanged(handlePathChanged, { priority: 'low' });
 
   // Add DOM Event Listeners.
   const handleCreateNewFolder = async () => {
@@ -48,9 +48,9 @@ export function FileListNewFolder(newFolderButton) {
 
     const newFolderSuffix = lastNamelessFolder === undefined
       ? ''
-      : (Number(lastNamelessFolder.name.match(newFolderNameFormat)[1]) || 1) + 1;
+      : ` ${(Number(lastNamelessFolder.name.match(newFolderNameFormat)[1]) || 1) + 1}`;
 
-    const newFolderName = `New Folder ${newFolderSuffix}`;
+    const newFolderName = `New Folder${newFolderSuffix}`;
 
     await create({ path: getCUrrentPath(), type: FileType.Directory, name: newFolderName });
 

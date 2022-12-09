@@ -31,6 +31,7 @@ export function localStorageScope(localStorageKey) {
  * 
  * @callback OnChange
  * @param {HandleOnChange<T>} changeHandler
+ * @param {{ priority: 'high'|'medium'|'low'}} [options]
  */
 
 /**
@@ -64,11 +65,25 @@ export function stateUnit(initialValue, { scope, allowRefresh = false } = {}) {
   };
 
   const onValue = (valueChangedHandler, { priority = 'medium' } = {}) => (valueChangedHandlers[priority] || valueChangedHandlers.medium).push(valueChangedHandler);
+  const removeOnValueHandler = (valueChangedHandler, { priority = 'medium' } = {}) => {
+    const p = priority || 'medium';
+    /**
+     * @type {Function[]|undefined}
+     */
+    const handlers = valueChangedHandlers[p];
+    if(handlers === undefined){
+      return;
+    }
+
+    valueChangedHandlers[p] = handlers.filter(h => h !== valueChangedHandler);
+  };
 
   const unit = [
     getValue,
     setValue,
     onValue,
+    removeOnValueHandler,
+    valueChangedHandlers,
   ];
 
   if(scope !== undefined) {
