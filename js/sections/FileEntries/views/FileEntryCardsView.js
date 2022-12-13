@@ -14,7 +14,7 @@ export function FileEntryCardsView({ type, name, extension, }) {
               i({ className: `fa ${type === 0 ? 'fa-folder' : 'fa-file'} fa-2xl` })()
             ),
             div({ className: 'ms-auto' })(
-              attach(FileEntryActions, FileEntryActionsView(), { name, extension })
+              attach(FileEntryActions, FileEntryActionsView(), { type, name, extension })
             )
           )
         ),

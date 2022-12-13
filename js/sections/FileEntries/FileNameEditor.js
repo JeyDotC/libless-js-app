@@ -1,8 +1,9 @@
+import { FileType, rename } from "../../api/fileSystem.js";
 import { input } from "../../lib/dom.js";
-import { editingEntry, entriesInCurrentPath } from "../../state/app.js";
+import { currentPath, editingEntry } from "../../state/app.js";
 
 const [ getEditingEntry, setEditingEntry, onEditingEntryChanged] = editingEntry;
-const [ , , onFilesChanged] = entriesInCurrentPath;
+const [getCurrentPath, setCurrentPath] = currentPath;
 
 const handleEditingEntryChanged = (editingEntry) => {
   if(editingEntry === undefined){
@@ -23,17 +24,6 @@ const handleEditingEntryChanged = (editingEntry) => {
   nameEditor.dispatchEvent(new CustomEvent('editEntry', { bubbles: false, }));
 };
 onEditingEntryChanged(handleEditingEntryChanged, { priority: 'low' });
-
-
-const handleOnFilesChanged = () => {
-  const entry = getEditingEntry();
-  if(entry === undefined){
-    return;
-  }
-  handleEditingEntryChanged(entry);
-}
-onFilesChanged(handleOnFilesChanged, { priority: 'low' });
-
 
 /**
  * 
@@ -60,9 +50,41 @@ export function FileNameEditor(view, { type, name, extension }){
     view.replaceChildren(fileNameEditorInput);
 
     fileNameEditorInput.select();
+    fileNameEditorInput.addEventListener('change', handleChangeName);
     fileNameEditorInput.addEventListener('blur', handleFinishEditEntry);
   }
   view.addEventListener('editEntry', handleEditEntry, false);
+
+  /**
+   * 
+   * @param {Event} event 
+   * @returns 
+   */
+  const handleChangeName = async (event) => {
+    const entry = getEditingEntry();
+    const path = getCurrentPath();
+    if(entry === undefined) {
+      return;
+    }
+
+    const { type, name, extension } = entry;
+    /**
+     * @type {string}
+     */
+    const rawValue = event.target.value;
+
+    if(rawValue === undefined || rawValue.length === 0 || rawValue.includes('/')){
+      return;
+    }
+
+    const parts = rawValue.split('.');
+    const newExtension = type === FileType.File ? parts.pop() : undefined;
+    const newName = type === FileType.File ? parts.join('.') : rawValue;
+
+    await rename({ path, name, extension, newName, newExtension});
+
+    setCurrentPath(path);
+  };
 
   const handleFinishEditEntry = () => {
     setEditingEntry(undefined);

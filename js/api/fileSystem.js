@@ -220,7 +220,7 @@ export function updateFile({ path, name, extension, contents }) {
   });
 }
 
-export function rename({ path, name, extension }) {
+export function rename({ path, name, extension, newName, newExtension }) {
   return startOperationAt(path, (parentDir, accept, reject) => {
     const entry = parentDir.getChild(name, extension);
 
@@ -230,11 +230,11 @@ export function rename({ path, name, extension }) {
 
     switch (entry.type) {
       case FileType.Directory:
-        entry.name = name;
+        entry.name = newName;
         break;
       case FileType.File:
-        entry.name = name;
-        entry.extension = extension;
+        entry.name = newName;
+        entry.extension = newExtension;
         break;
     }
 

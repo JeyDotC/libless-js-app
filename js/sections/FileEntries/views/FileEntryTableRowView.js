@@ -9,7 +9,7 @@ export function FileEntryTableRowView({ type, name, extension, }) {
     td({ className: 'file-system-entry-icon' })(
       i({ className: `fa ${type === 0 ? 'fa-folder' : 'fa-file' }`})()
     ),
-    attach(FileNameEditor, td({ className: 'file-system-entry-name' })(), { name, extension }),
+    attach(FileNameEditor, td({ className: 'file-system-entry-name' })(), { type, name, extension }),
     td({ className: 'text-end' })(
       attach(FileEntryActions, FileEntryActionsView(), { type, name, extension })
     )

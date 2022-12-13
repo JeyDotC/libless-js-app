@@ -12,9 +12,6 @@ export function FileEntry(view, { entry }) {
   const [getCurrentPath, setCurrentPath] = currentPath;
 
   const handleEntryClicked = () => {
-    /**
-     * @type {string}
-     */
     const parentPath = getCurrentPath();
 
     if(type === FileType.Directory){
