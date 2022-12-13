@@ -26,6 +26,8 @@ export function FileEntryActions(view, { name, extension }) {
    */
   const handleMenuOpen = (event) => {
     event.stopPropagation();
+
+    document.querySelectorAll('ul.dropdown-menu').forEach(el => el.classList.remove('show'));
     menu.classList.toggle('show');
   }
   toggleButton.addEventListener('click', handleMenuOpen);

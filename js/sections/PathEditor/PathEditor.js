@@ -33,12 +33,15 @@ export function PathEditor(view) {
       return setCurrentPath(value);
     }
 
+    const path = getCurrentPath() || '/';
+    const pathTextEditorView = PathTextEditorView({ path });
     view.replaceChildren(
       attach(
         PathTextEditor,
-        PathTextEditorView({ path: getCurrentPath() })
+        pathTextEditorView
       )
     );
+    pathTextEditorView.select();
   };
   view.addEventListener('click', handlePartClicked);
 

@@ -11,6 +11,18 @@ const AttrHandlers = {
  */
 const defaultAttrHandler = (element, key, value) => element.setAttribute(key, value);
 
+/**
+ * @template TElement
+ * @callback SetChildren
+ * @param {...*} children
+ * @returns {TElement}
+ */
+/**
+ * 
+ * @param {string} tag 
+ * @param {Object} attrs 
+ * @returns {SetChildren}
+ */
 export function el(tag, attrs) {
   /**
    * @type {HTMLElement}
@@ -35,6 +47,11 @@ export function el(tag, attrs) {
   }
 }
 
+/**
+ * 
+ * @param {Object} attrs 
+ * @returns {SetChildren<HTMLAnchorElement>}
+ */
 export function a(attrs) { return el('a', attrs); }
 export function abbr(attrs) { return el('abbr', attrs); }
 export function acronym(attrs) { return el('acronym', attrs); }
@@ -89,6 +106,11 @@ export function html(attrs) { return el('html', attrs); }
 export function i(attrs) { return el('i', attrs); }
 export function iframe(attrs) { return el('iframe', attrs); }
 export function img(attrs) { return el('img', attrs); }
+/**
+ * 
+ * @param {Object} attrs 
+ * @returns {SetChildren<HTMLInputElement>}
+ */
 export function input(attrs) { return el('input', attrs); }
 export function ins(attrs) { return el('ins', attrs); }
 export function kbd(attrs) { return el('kbd', attrs); }
