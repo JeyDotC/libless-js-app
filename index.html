@@ -25,9 +25,13 @@
     </div>
 
     <div id="file-list">
-      <div id="file-list-controls" class="d-flex">
-        <button id="file-list-new-folder" class="btn btn-light">
+      <div id="file-list-controls" class="d-flex" style="column-gap: 0.25rem">
+        <button id="file-list-new-folder" class="btn btn-light" title="New Folder">
           <i class="fa fa-folder"></i>
+          <sup class="fa fa-plus"></sup>
+        </button>
+        <button id="file-list-new-file" class="btn btn-light btn-sm" title="New File">
+          <i class="fa fa-file"></i>
           <sup class="fa fa-plus"></sup>
         </button>
         <div id="file-list-view-selector" class="btn-group ms-auto" role="group" aria-label="Views">

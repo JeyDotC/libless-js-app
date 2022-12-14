@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/general.css" />
+  <title>Fake File System</title>
+</head>
+
+<body>
+  <div class="container">
+    
+    <h1>Fake File System</h1>
+
+    <div class="d-flex mb-3">
+      <a id="back-button" href="/index.html" class="btn btn-light">
+        <i class="fa fa-arrow-left"></i>
+      </a>
+
+      <input id="file-name-button" class="form-control flex-fill" value="New File.txt" placeholder="File Name.txt" />
+    </div>
+
+    <div class="mb-2">
+      <textarea class="form-control" rows="15" autofocus></textarea>
+    </div>
+
+    <div id="file-controls" class="text-end">
+      <button id="file-save" class="btn btn-success">
+        Save New File
+        <i class="fa fa-save"></i>
+      </button>
+    </div>
+  </div>
+
+  <script src="/js/pages/edit-file.js" type="module"></script>
+
+  <script>
+    // This is to emulate the scenario where server would render the
+    // Back button's URL
+    (function () {
+      document.querySelector('#back-button').href = `/index.html${location.search}`;
+    })();
+  </script>
+</body>
+
+</html>

@@ -14,7 +14,6 @@ class FileSystemEntry {
    * @type {number}
    */
   type = FileType.Directory;
-  contents = undefined;
   /**
    * @type {Array<FileSystemEntry>}
    */
@@ -24,19 +23,18 @@ class FileSystemEntry {
    */
   parent = undefined;
 
-  constructor(name, extension, type, contents = undefined) {
+  constructor(name, extension, type) {
     this.name = name;
     this.extension = extension;
     this.type = type;
-    this.contents = contents;
   }
 
   static createDirectory(name) {
     return new FileSystemEntry(name, undefined, FileType.Directory);
   }
 
-  static createFile(name, extension, contents) {
-    return new FileSystemEntry(name, extension, FileType.File, contents);
+  static createFile(name, extension) {
+    return new FileSystemEntry(name, extension, FileType.File);
   }
 
   /**
@@ -87,10 +85,9 @@ class FileSystem {
     name,
     extension,
     type,
-    contents,
     children,
   }) {
-    const entry = new FileSystemEntry(name, extension, type, contents);
+    const entry = new FileSystemEntry(name, extension, type);
     children.forEach(child => {
       entry.addChild(this.loadEntry(child));
     });
@@ -151,10 +148,10 @@ function startOperationAt(path, operation) {
 
 export { FileType };
 
-export function create({ path, name, extension = undefined, type, contents }) {
+export function create({ path, name, extension = undefined, type }) {
   return startOperationAt(path, (parentDir, accept, reject) => {
     const entry = type === FileType.File
-      ? FileSystemEntry.createFile(name, extension, contents)
+      ? FileSystemEntry.createFile(name, extension)
       : FileSystemEntry.createDirectory(name);
 
     if (parentDir.hasChild(entry.name, entry.extension)) {
@@ -175,9 +172,6 @@ export function create({ path, name, extension = undefined, type, contents }) {
  *  type: number,
  *  childCount: number,
  * }} FileSystemEntryInfo
- */
-
-/**
  * 
  * @param {{ path: string }} listParams
  * @returns {Promise<FileSystemEntryInfo[]>}
@@ -195,6 +189,22 @@ export function list({ path }) {
   });
 }
 
+/**
+ * 
+ * @param {string} path 
+ * @param {string} name 
+ * @param {string} extension 
+ * @returns {string}
+ */
+function contentsKey(path, name, extension) {
+  return `file://${path}/${name}${extension || ''}`;
+}
+
+/**
+ * 
+ * @param {{ path: string, name: string, extension: string }} contentsQuery 
+ * @returns {Promise<string>}
+ */
 export function getContents({ path, name, extension }) {
   return startOperationAt(path, (parentDir, accept, reject) => {
     const file = parentDir.getChild(name, extension);
@@ -202,20 +212,26 @@ export function getContents({ path, name, extension }) {
       return reject(`File ${name}${extension} at ${path} not found`);
     }
 
-    accept(file.contents);
+    const key = contentsKey(path, name, extension);
+    const contents = localStorage.getItem(key) || '';
+    accept(contents);
   });
 }
 
-
-export function updateFile({ path, name, extension, contents }) {
+/**
+ * 
+ * @param {{ path: string, name: string, extension: string, contents: string }} contentSaveCommand
+ * @returns {Promise}
+ */
+export function setContents({ path, name, extension, contents }) {
   return startOperationAt(path, (parentDir, accept, reject) => {
     const file = parentDir.getChild(name, extension);
     if (file === undefined || file.type !== FileType.File) {
       return reject(`File ${name}${extension} at ${path} not found`);
     }
-    file.contents = contents;
+    const key = contentsKey(path, name, extension);
+    localStorage.setItem(key, contents);
 
-    fileSystem.persist();
     accept();
   });
 }
@@ -254,6 +270,12 @@ export function deleteEntry({ path, name, extension }) {
     entry.remove();
 
     fileSystem.persist();
+
+    if(entry.type === FileType.File){
+      const key = contentsKey(path, name, extension);
+      localStorage.removeItem(key);
+    }
+
     accept();
   });
 }

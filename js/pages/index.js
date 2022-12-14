@@ -4,11 +4,13 @@ import { PathEditor } from "../sections/PathEditor/PathEditor.js";
 import { attach } from "../lib/controller.js";
 import { PathUp } from "../sections/PathEditor/PathUp.js";
 import { FileListNewFolder } from "../sections/FileListControls/FileListNewFolder.js";
+import { FileListNewFile } from "../sections/FileListControls/FileListNewFile.js";
 
 attach(PathEditor, document.querySelector("#path"));
 
 attach(PathUp, document.querySelector("#path-up"));
 attach(FileListViewSelector, document.querySelector("#file-list-view-selector"));
 attach(FileListNewFolder, document.querySelector("#file-list-new-folder"));
+attach(FileListNewFile, document.querySelector("#file-list-new-file"));
 
 attach(FileListEntries, document.querySelector("#file-list-entries"));
