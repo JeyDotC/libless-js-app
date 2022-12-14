@@ -81,7 +81,7 @@ export function FileNameEditor(view, { type, name, extension }){
     const newExtension = type === FileType.File ? parts.pop() : undefined;
     const newName = type === FileType.File ? parts.join('.') : rawValue;
 
-    await rename({ path, name, extension, newName, newExtension});
+    await rename({ path, name, extension, newName, newExtension: `.${newExtension}`});
 
     setCurrentPath(path);
   };
