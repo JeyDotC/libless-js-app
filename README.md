@@ -47,3 +47,46 @@ graph TD
     SectionController -- Has Many --> StateUnit
     AppState -- Has Many --> StateUnit
 ```
+
+### The classical Counter example
+
+Load a regular HTML page.
+
+```html
+<div id="counter">
+    Count <span id="counter-value"></span>
+    <button id="counter-add">Add</button>
+</div>
+
+<script type="module" src="js/CounterPresenter.js"></script>
+```
+
+The page loads the counter as a JavaScript module.
+
+```javascript
+const [ getCounterValue, setCounterValue, onCounterValueChanged] = stateUnit(0);
+
+export function CounterPresenter(counterView) {
+    // Get a handle of relevant DOM elements.
+    const addButton = counterView.querySelector('#counter-add');
+    const counterValueDisplay = counterView.querySelector('#counter-value');
+
+    // Handle State Unit events.
+    const handleCounterValueChanged = (newCounterValue) => {
+        // When count state unit changes, we update the display element.
+        counterValueDisplay.textContent = newCounterValue;
+    };
+    onCounterValueChanged(handleCounterValueChanged);
+
+    // Handle DOM events.
+    const handleCounterAddClicked = () => {
+        // When the add button gets clicked, we update the counter value
+        // with the original value + 1.
+        setCounterValue(getCounterValue() + 1);
+    };
+    addButton.addEventListener('click', handleCounterAddClicked);
+}
+
+// We attach the presenter to the HTML element.
+attach(CounterPresenter, document.querySelector("#counter"));
+```
