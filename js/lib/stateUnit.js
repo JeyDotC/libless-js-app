@@ -1,20 +1,34 @@
-export function localStorageScope(localStorageKey) {
+/**
+ * 
+ * @param {Storage} storage 
+ * @param {string} key 
+ * @returns {Function}
+ */
+function storeAt(storage, key) {
   return ([getValue, setValue, onValue]) => {
 
-    const storedValue = localStorage.getItem(localStorageKey);
+    const storedValue = storage.getItem(key);
 
     if (storedValue !== null) {
       const retrievedValue = JSON.parse(storedValue);
       setValue(retrievedValue);
     } else {
-      localStorage.setItem(localStorageKey, JSON.stringify(getValue()))
+      storage.setItem(key, JSON.stringify(getValue()))
     }
 
     onValue(
-      newValue => localStorage.setItem(localStorageKey, JSON.stringify(newValue)),
+      newValue => storage.setItem(key, JSON.stringify(newValue)),
       { priority: 'low' }
     );
   };
+}
+
+export function localStorageScope(localStorageKey) {
+  return storeAt(localStorage, localStorageKey);
+}
+
+export function sessionStorageScope(sessionStorageKey) {
+  return storeAt(sessionStorage, sessionStorageKey);
 }
 
 /**

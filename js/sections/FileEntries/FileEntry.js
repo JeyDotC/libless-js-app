@@ -4,9 +4,10 @@ import { currentPath } from "../../state/app.js";
 /**
  * 
  * @param {HTMLElement} view 
+ * @param {{ entry: import("../../api/fileSystem.js").FileSystemEntryInfo }} 
  */
 export function FileEntry(view, { entry }) {
-  const { type, name, } = entry;
+  const { type, name, extension } = entry;
 
   // Create state units
   const [getCurrentPath, setCurrentPath] = currentPath;
@@ -15,7 +16,14 @@ export function FileEntry(view, { entry }) {
     const parentPath = getCurrentPath();
 
     if(type === FileType.Directory){
-      setCurrentPath(`${parentPath !== '/' ? parentPath : ''}/${name}`);
+      return setCurrentPath(`${parentPath !== '/' ? parentPath : ''}/${name}`);
+    }
+
+    if(type === FileType.File) {
+      const url = new URL(location);
+      url.searchParams.set('editingFile', `${name}${extension}`);
+      url.pathname = '/edit-file.html';
+      location.href = url.toString();
     }
   };
 

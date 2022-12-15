@@ -14,24 +14,36 @@
 </head>
 
 <body>
-  <div class="container">
-    
+  <div id="file-editor" class="container">
+
     <h1>Fake File System</h1>
 
     <div class="d-flex mb-3">
-      <a id="back-button" href="/index.html" class="btn btn-light">
-        <i class="fa fa-arrow-left"></i>
-      </a>
-
-      <input id="file-name-button" class="form-control flex-fill" value="New File.txt" placeholder="File Name.txt" />
+      <div>
+        <a id="back-button" href="/index.html" class="btn btn-light">
+          <i class="fa fa-arrow-left"></i>
+        </a>
+      </div>
+      <div class="flex-fill">
+        <input 
+          id="file-name-input"
+          class="form-control"
+          value="New File.txt"
+          placeholder="File Name.txt"
+          aria-describedby="file-name-input-validation"
+          />
+        <div id="file-name-input-validation" class="invalid-feedback">
+          Invalid File Name
+        </div>
+      </div>
     </div>
 
     <div class="mb-2">
-      <textarea class="form-control" rows="15" autofocus></textarea>
+      <textarea id="file-contents-input" class="form-control" rows="15" autofocus></textarea>
     </div>
 
     <div id="file-controls" class="text-end">
-      <button id="file-save" class="btn btn-success">
+      <button id="file-save-button" class="btn btn-success">
         Save New File
         <i class="fa fa-save"></i>
       </button>
