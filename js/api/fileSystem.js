@@ -276,6 +276,14 @@ export function deleteEntry({ path, name, extension }) {
       localStorage.removeItem(key);
     }
 
+    if(entry.type === FileType.Directory){
+      const keyBase = contentsKey(path, name) + '/';
+      Object
+        .keys(localStorage)
+        .filter(k => k.startsWith(keyBase))
+        .forEach(k => localStorage.removeItem(k));
+    }
+
     accept();
   });
 }
