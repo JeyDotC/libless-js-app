@@ -1,7 +1,7 @@
 import { div, i } from "../../../lib/dom.js";
-import { FileNameEditor } from "../FileNameEditor.js";
-import { attach } from '../../../lib/controller.js';
-import { FileEntryActions } from "../FileEntryActions.js";
+import { FileNameEditorPresenter } from "../FileNameEditorPresenter.js";
+import { attach } from '../../../lib/presenter.js';
+import { FileEntryActionsPresenter } from "../FileEntryActionsPresenter.js";
 import { FileEntryActionsView } from "./FileEntryActionsView.js";
 
 export function FileEntryCardsView({ type, name, extension, }) {
@@ -14,12 +14,12 @@ export function FileEntryCardsView({ type, name, extension, }) {
               i({ className: `fa ${type === 0 ? 'fa-folder' : 'fa-file'} fa-2xl` })()
             ),
             div({ className: 'ms-auto' })(
-              attach(FileEntryActions, FileEntryActionsView(), { type, name, extension })
+              attach(FileEntryActionsPresenter, FileEntryActionsView(), { type, name, extension })
             )
           )
         ),
         attach(
-          FileNameEditor,
+          FileNameEditorPresenter,
           div({ className: 'file-system-entry-name card-body' })(),
           { type, name, extension }
         ),

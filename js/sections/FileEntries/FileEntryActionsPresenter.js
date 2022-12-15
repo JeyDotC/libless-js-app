@@ -9,7 +9,7 @@ const [ , setEditingEntry] = editingEntry;
  * @param {HTMLElement} view 
  * @param {import("../../api/fileSystem").FileSystemEntryInfo}
  */
-export function FileEntryActions(view, { type, name, extension }) {
+export function FileEntryActionsPresenter(view, { type, name, extension }) {
 
   const toggleButton = view.querySelector('.file-entry-action-toggle');
   /**

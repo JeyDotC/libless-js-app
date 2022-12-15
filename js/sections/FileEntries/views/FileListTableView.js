@@ -1,6 +1,6 @@
-import { attach } from "../../../lib/controller.js";
+import { attach } from "../../../lib/presenter.js";
 import { table, tbody, td, th, thead, tr } from "../../../lib/dom.js";
-import { FileEntry } from "../FileEntry.js";
+import { FileEntryPresenter } from "../FileEntryPresenter.js";
 import { FileEntryTableRowView } from "./FileEntryTableRowView.js";
 import { NoEntriesFoundView } from "./NoEntriesFoundView.js";
 
@@ -16,7 +16,7 @@ export function FileListTableView({ files }) {
     ),
     tbody({ id: 'file-system-list' })(
       ...files.map((entry) => attach(
-        FileEntry,
+        FileEntryPresenter,
         FileEntryTableRowView(entry),
         { entry }
       )),

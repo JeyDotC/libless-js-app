@@ -6,58 +6,58 @@ import { currentPath, editingEntry, entriesInCurrentPath } from "../../state/app
  * @typedef {import("../../api/fileSystem.js").FileSystemEntryInfo} FileSystemEntryInfo
  */
 
-const newFolderNameFormat = /New Folder( [0-9]+)*/;
+const newFileNameFormat = /New File( [0-9]+)*/;
 
 /**
  * 
- * @param {HTMLElement} newFolderButton 
+ * @param {HTMLElement} newFileButton 
  */
-export function FileListNewFolder(newFolderButton) {
+export function FileListNewFilePresenter(newFileButton) {
 
   const [getEntriesInCurrentPath, , onEntriesInCurrentPathChanged] = entriesInCurrentPath;
   const [getCurrentPath, setCurrentPath] = currentPath;
   const [, setEditingEntry] = editingEntry;
-  const [getNewFolderName, setNewFolderName] = stateUnit();
+  const [getNewFileName, setNewFileName] = stateUnit();
 
   // Set state unit listeners.
   const handleEntriesInCurrentPathChanged = () => {
-    const newFolderName = getNewFolderName();
+    const newFileName = getNewFileName();
 
-    if(newFolderName === undefined){
+    if(newFileName === undefined){
       return;
     }
     
-    setNewFolderName(undefined);
-    setEditingEntry({ name: newFolderName, type: FileType.Directory });
+    setNewFileName(undefined);
+    setEditingEntry({ name: newFileName, type: FileType.File, extension: '.txt' });
   };
   onEntriesInCurrentPathChanged(handleEntriesInCurrentPathChanged, { priority: 'low' });
 
   // Add DOM Event Listeners.
-  const handleCreateNewFolder = async () => {
+  const handleCreateNewFile = async () => {
     /**
      * @type {FileSystemEntryInfo[]|undefined}
      */
-    const [lastNamelessFolder] = getEntriesInCurrentPath()
+    const [lastNamelessFile] = getEntriesInCurrentPath()
       .filter(
         /**
          * 
          * @param {FileSystemEntryInfo} entry
          * @returns {FileSystemEntryInfo[]}
          */
-        ({ type, name }) => type === FileType.Directory && newFolderNameFormat.test(name))
+        ({ type, name, extension }) => type === FileType.File && newFileNameFormat.test(name) && extension === '.txt')
       .sort()
       .reverse();
 
-    const newFolderSuffix = lastNamelessFolder === undefined
+    const newFileSuffix = lastNamelessFile === undefined
       ? ''
-      : ` ${(Number(lastNamelessFolder.name.match(newFolderNameFormat)[1]) || 1) + 1}`;
+      : ` ${(Number(lastNamelessFile.name.match(newFileNameFormat)[1]) || 1) + 1}`;
 
-    const newFolderName = `New Folder${newFolderSuffix}`;
+    const newFileName = `New File${newFileSuffix}`;
 
-    await create({ path: getCurrentPath(), type: FileType.Directory, name: newFolderName });
+    await create({ path: getCurrentPath(), type: FileType.File, name: newFileName, extension: '.txt' });
 
-    setNewFolderName(newFolderName);
+    setNewFileName(newFileName);
     setCurrentPath(getCurrentPath());
   }
-  newFolderButton.addEventListener('click', handleCreateNewFolder);
+  newFileButton.addEventListener('click', handleCreateNewFile);
 }

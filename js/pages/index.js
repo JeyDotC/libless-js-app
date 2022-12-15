@@ -1,16 +1,16 @@
-import { FileListEntries } from "../sections/FileEntries/FileListEntries.js";
-import { FileListViewSelector } from "../sections/FileListControls/FileListViewSelector.js";
-import { PathEditor } from "../sections/PathEditor/PathEditor.js";
-import { attach } from "../lib/controller.js";
-import { PathUp } from "../sections/PathEditor/PathUp.js";
-import { FileListNewFolder } from "../sections/FileListControls/FileListNewFolder.js";
-import { FileListNewFile } from "../sections/FileListControls/FileListNewFile.js";
+import { FileListEntriesPresenter } from "../sections/FileEntries/FileListEntriesPresenter.js";
+import { FileListViewSelectorPresenter } from "../sections/FileListControls/FileListViewSelectorPresenter.js";
+import { PathEditorPresenter } from "../sections/PathEditor/PathEditorPresenter.js";
+import { attach } from "../lib/presenter.js";
+import { PathUpPresenter } from "../sections/PathEditor/PathUpPresenter.js";
+import { FileListNewFolderPresenter } from "../sections/FileListControls/FileListNewFolderPresenter.js";
+import { FileListNewFilePresenter } from "../sections/FileListControls/FileListNewFilePresenter.js";
 
-attach(PathEditor, document.querySelector("#path"));
+attach(PathEditorPresenter, document.querySelector("#path"));
 
-attach(PathUp, document.querySelector("#path-up"));
-attach(FileListViewSelector, document.querySelector("#file-list-view-selector"));
-attach(FileListNewFolder, document.querySelector("#file-list-new-folder"));
-attach(FileListNewFile, document.querySelector("#file-list-new-file"));
+attach(PathUpPresenter, document.querySelector("#path-up"));
+attach(FileListViewSelectorPresenter, document.querySelector("#file-list-view-selector"));
+attach(FileListNewFolderPresenter, document.querySelector("#file-list-new-folder"));
+attach(FileListNewFilePresenter, document.querySelector("#file-list-new-file"));
 
-attach(FileListEntries, document.querySelector("#file-list-entries"));
+attach(FileListEntriesPresenter, document.querySelector("#file-list-entries"));

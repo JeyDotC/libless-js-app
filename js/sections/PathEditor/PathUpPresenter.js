@@ -4,7 +4,7 @@ import { currentPath } from "../../state/app.js";
  * 
  * @param {HTMLElement} view 
  */
-export function PathUp(view) {
+export function PathUpPresenter(view) {
 
   const [getCurrentPath, setCurrentPath] = currentPath;
 

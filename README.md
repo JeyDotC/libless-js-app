@@ -31,20 +31,20 @@ graph TD
     Server((Server))
     PageDOM([Page DOM])
     PageScript[Page Script]:::Script
-    SectionController[Section Controller]:::Script
+    SectionPresenter[Section Presenter]:::Script
     ApiClient:::Script
     AppState:::Script
     StateUnit:::Script
 
     Server -- Loads --> PageDOM
     PageDOM -- Loads --> PageScript
-    PageScript -- Attaches Many --> SectionController
-    SectionController -- Attaches Many --> SectionController
-    SectionController -. Manipulates .-> PageDOM
-    SectionController -- Invokes --> ApiClient
+    PageScript -- Attaches Many --> SectionPresenter
+    SectionPresenter -- Attaches Many --> SectionPresenter
+    SectionPresenter -. Manipulates .-> PageDOM
+    SectionPresenter -- Invokes --> ApiClient
     ApiClient -. Invokes .-> Server
-    SectionController -. Interacts with .-> AppState
-    SectionController -- Has Many --> StateUnit
+    SectionPresenter -. Interacts with .-> AppState
+    SectionPresenter -- Has Many --> StateUnit
     AppState -- Has Many --> StateUnit
 ```
 

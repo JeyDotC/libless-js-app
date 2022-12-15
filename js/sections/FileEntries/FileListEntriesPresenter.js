@@ -12,7 +12,7 @@ const viewsDictionary = {
  * 
  * @param {HTMLElement} view 
  */
-export function FileListEntries(view) {
+export function FileListEntriesPresenter(view) {
   // Create state units.
   const [getCurrentPath, setCurrentPath, onCurrentPathChanged] = currentPath;
   const [getCurrentView, , onCurrentViewChanged] = currentView;

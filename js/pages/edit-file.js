@@ -1,4 +1,4 @@
-import { attach } from '../lib/controller.js';
-import { FileEditor } from '../sections/FileEditor/FileEditor.js';
+import { attach } from '../lib/presenter.js';
+import { FileEditorPresenter } from '../sections/FileEditor/FileEditorPresenter.js';
 
-attach(FileEditor, document.querySelector('#file-editor'));
+attach(FileEditorPresenter, document.querySelector('#file-editor'));

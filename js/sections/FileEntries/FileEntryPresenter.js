@@ -6,7 +6,7 @@ import { currentPath } from "../../state/app.js";
  * @param {HTMLElement} view 
  * @param {{ entry: import("../../api/fileSystem.js").FileSystemEntryInfo }} 
  */
-export function FileEntry(view, { entry }) {
+export function FileEntryPresenter(view, { entry }) {
   const { type, name, extension } = entry;
 
   // Create state units

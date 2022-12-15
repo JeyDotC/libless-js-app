@@ -6,7 +6,7 @@ const [getCurrentPath, setCurrentPath] = currentPath;
  * 
  * @param {HTMLInputElement} view 
  */
-export function PathTextEditor(view) {
+export function PathTextEditorPresenter(view) {
 
   const handlePathChange = (event) => {
     const newPath = event.target.value;

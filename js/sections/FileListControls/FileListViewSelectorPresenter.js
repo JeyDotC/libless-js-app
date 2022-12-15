@@ -4,7 +4,7 @@ import { currentView } from "../../state/app.js";
  * 
  * @param {HTMLElement} view 
  */
-export function FileListViewSelector(view) {
+export function FileListViewSelectorPresenter(view) {
   
   const [getCurrentView, setCurrentView, onCurrentViewChanged] = currentView;
 

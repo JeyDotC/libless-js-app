@@ -19,7 +19,7 @@ function getNameParts(fileName) {
  * 
  * @param {HTMLElement} view 
  */
-export function FileEditor(view) {
+export function FileEditorPresenter(view) {
   // Get relevant Elements
   /**
    * @type {HTMLInputElement}

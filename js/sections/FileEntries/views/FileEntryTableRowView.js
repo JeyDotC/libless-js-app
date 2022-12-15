@@ -1,7 +1,7 @@
-import { attach } from "../../../lib/controller.js";
+import { attach } from "../../../lib/presenter.js";
 import { i, td, tr } from "../../../lib/dom.js";
-import { FileEntryActions } from "../FileEntryActions.js";
-import { FileNameEditor } from "../FileNameEditor.js";
+import { FileEntryActionsPresenter } from "../FileEntryActionsPresenter.js";
+import { FileNameEditorPresenter } from "../FileNameEditorPresenter.js";
 import { FileEntryActionsView } from "./FileEntryActionsView.js";
 
 export function FileEntryTableRowView({ type, name, extension, }) {
@@ -9,9 +9,9 @@ export function FileEntryTableRowView({ type, name, extension, }) {
     td({ className: 'file-system-entry-icon' })(
       i({ className: `fa ${type === 0 ? 'fa-folder' : 'fa-file' }`})()
     ),
-    attach(FileNameEditor, td({ className: 'file-system-entry-name' })(), { type, name, extension }),
+    attach(FileNameEditorPresenter, td({ className: 'file-system-entry-name' })(), { type, name, extension }),
     td({ className: 'text-end' })(
-      attach(FileEntryActions, FileEntryActionsView(), { type, name, extension })
+      attach(FileEntryActionsPresenter, FileEntryActionsView(), { type, name, extension })
     )
   );
 }

@@ -31,7 +31,7 @@ onEditingEntryChanged(handleEditingEntryChanged, { priority: 'low' });
  * @param {*} param1 
  * @returns {Function}
  */
-export function FileNameEditor(view, { type, name, extension }){
+export function FileNameEditorPresenter(view, { type, name, extension }){
   view.dataset.entryType = type;
   view.dataset.entryName = name;
   view.dataset.entryExtension = extension || '';

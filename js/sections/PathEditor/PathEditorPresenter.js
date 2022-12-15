@@ -1,6 +1,6 @@
-import { attach } from "../../lib/controller.js";
+import { attach } from "../../lib/presenter.js";
 import { currentPath } from "../../state/app.js";
-import { PathTextEditor } from "./PathTextEditor.js";
+import { PathTextEditorPresenter } from "./PathTextEditorPresenter.js";
 import { PathButtonsView } from "./views/PathButtonsView.js";
 import { PathTextEditorView } from "./views/PathTextEditorView.js";
 
@@ -8,7 +8,7 @@ import { PathTextEditorView } from "./views/PathTextEditorView.js";
  * 
  * @param {HTMLElement} view 
  */
-export function PathEditor(view) {
+export function PathEditorPresenter(view) {
 
   // Create state units.
   const [getCurrentPath, setCurrentPath, onCurrentPathChanged] = currentPath;
@@ -37,7 +37,7 @@ export function PathEditor(view) {
     const pathTextEditorView = PathTextEditorView({ path });
     view.replaceChildren(
       attach(
-        PathTextEditor,
+        PathTextEditorPresenter,
         pathTextEditorView
       )
     );
