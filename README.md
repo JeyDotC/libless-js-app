@@ -33,7 +33,6 @@ graph TD
     PageScript[Page Script]:::Script
     SectionPresenter[Section Presenter]:::Script
     ApiClient:::Script
-    AppState:::Script
     StateUnit:::Script
 
     Server -- Loads --> PageDOM
@@ -43,9 +42,8 @@ graph TD
     SectionPresenter -. Manipulates .-> PageDOM
     SectionPresenter -- Invokes --> ApiClient
     ApiClient -. Invokes .-> Server
-    SectionPresenter -. Interacts with .-> AppState
     SectionPresenter -- Has Many --> StateUnit
-    AppState -- Has Many --> StateUnit
+    StateUnit -. Notifies .-> SectionPresenter
 ```
 
 ### The classical Counter example
