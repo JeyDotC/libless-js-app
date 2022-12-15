@@ -183,7 +183,16 @@ export function list({ path }) {
       extension,
       type,
       childCount: children.length,
-    }))
+    })).sort(({ name: name1 }, { name: name2 }) => {
+      if(name1 < name2) {
+        return -1;
+      }
+      if(name1 > name2) {
+        return 1;
+      }
+
+      return 0;
+    }).sort(({ type: type1 }, { type: type2 }) => type1 - type2 );
 
     accept(result);
   });
