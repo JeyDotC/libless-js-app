@@ -46,6 +46,12 @@ graph TD
     StateUnit -. Notifies .-> SectionPresenter
 ```
 
+This is sort of a Model View Presenter (MVP) implementation where:
+
+* **Model:** In this implementation they are represented by State Units, which are objects that store a value and notify of any change to it. The API client is also considered of part of the model.
+* **View:** Basically the DOM, it can be the part that has been loaded during page load, or any new element added using the regular document object or the `lib/dom.js` script.
+* **Presenter:** This is an object that responds to events emitted by the **Model**, through State Unit notifications, and the **View**, through classical DOM events. This is the unifying piece that integrates business logic and presentation.
+
 ### The classical Counter example
 
 Load a regular HTML page.
