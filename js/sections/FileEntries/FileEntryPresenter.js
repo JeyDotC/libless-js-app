@@ -22,7 +22,7 @@ export function FileEntryPresenter(view, { entry }) {
     if(type === FileType.File) {
       const url = new URL(location);
       url.searchParams.set('editingFile', `${name}${extension}`);
-      url.pathname = '/edit-file.html';
+      url.pathname = 'libless-js-app/edit-file.html';
       location.href = url.toString();
     }
   };
